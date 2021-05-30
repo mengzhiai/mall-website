@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+ul li {
+  list-style: none;
+}
+
+ul {
+  padding: 0 !important;
+}
+
+a {
+  color: #444;
+  text-decoration: none;
+}
+
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+  font-family: "Microsoft Yahei", "微软雅黑", arial, "\5b8b\4f53";
+}
+
+
+
+body {
+  overflow-x: hidden;
+  font-size: 14px;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+
+.flex {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.max-box {
+  width: 1200px;
+  margin: 0 auto;
+}

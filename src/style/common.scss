@@ -1,0 +1,122 @@
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+  font-family: "Microsoft Yahei", "微软雅黑", arial, "\5b8b\4f53";
+  margin: 0;
+  padding: 0;
+}
+
+
+.xm-container {
+  margin: 0 10px;
+  .search {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #dcdee2;
+    border-color: #e8eaec;
+
+    &:hover {
+      box-shadow: 0 1px 6px #ccc;
+      border-color: #eee;
+    }
+
+    .el-form-item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.xm-table {
+  margin-top: 10px;
+  // border: 1px solid #dcdee2;
+  // border-color: #e8eaec;
+  background-color: #fff;
+  padding: 15px;
+
+  .el-table {
+
+    th,
+    td {
+      text-align: center;
+    }
+  }
+}
+
+.xm-page {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 10px;
+  background-color: #fff;
+}
+
+
+
+.flex {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.upload-img {
+  .el-upload--picture-card {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+  }
+  .el-upload-list--picture-card .el-upload-list__item {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.no-upload .avatar-uploader-icon,
+.no-upload .el-upload--picture-card {
+  display: none;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+}
+
+
+.maxbox {
+  width: 1200px;
+  margin: 0 auto;
+}
