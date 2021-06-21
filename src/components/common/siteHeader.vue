@@ -219,7 +219,7 @@ export default {
 
   .header-nav {
     margin: 0 50px;
-    line-height: 50px;
+    line-height: 30px;
 
     li {
       margin: 0 15px;

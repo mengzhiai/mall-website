@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-03-21 18:39:12
+ * @LastEditTime: 2021-06-21 23:15:18
  * @FilePath: \mi-mall\src\App.vue
 -->
 <template>
@@ -16,8 +16,7 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: #333;
 }
 
 #nav {

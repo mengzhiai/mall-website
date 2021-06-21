@@ -95,6 +95,10 @@ h6 {
   margin: 0 auto;
 }
 
+.point {
+  cursor: pointer;
+}
+
 .xm-container {
   margin: 0 10px;
 }
