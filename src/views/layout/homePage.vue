@@ -2,12 +2,12 @@
  * @Date: 2021-05-30 21:37:55
  * @Description: 中间内容
  * @LastEditors: jun
- * @LastEditTime: 2021-05-31 00:44:48
+ * @LastEditTime: 2021-06-21 22:41:09
  * @FilePath: \mi-mall\src\views\layout\homePage.vue
 -->
 <template>
 <div class="wrap">
-  <div class="maxbox">
+  <div class="max-box">
     <div class="home-page">
       <div class="page">
       </div>
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="all">
-    <div class="maxbox" v-for="item in productList" :key="item.id">
+    <div class="max-box" v-for="item in productList" :key="item.id">
       <div class="common-title">
         <div class="name">{{item.name}}</div>
         <div class="more">
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="product">
-        <div class="item" v-for="(ele, e) in item.list" :key="e">
+        <div class="item" v-for="(ele, e) in item.list" :key="e" @click="detail(item)">
           <div class="top-txt" v-if="ele.isNew==1">新品</div>
           <div class="cen-img">
             <img :src="ele.img" alt />
@@ -196,10 +196,17 @@ export default {
     },
     // banner详情页
     bannerDeail() {},
+
+
     //商品详情页
-    productDetail(id) {
+    detail(row) {
       // console.log(id);
-      this.$router.push("/detail");
+      this.$router.push({
+        name: 'detail',
+        query: {
+          id: row.id
+        }
+      });
     }
   }
 };
@@ -332,6 +339,7 @@ export default {
       text-align: center;
       cursor: pointer;
       transition: all 0.2s linear;
+      position: relative;
 
       &:hover {
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -339,6 +347,10 @@ export default {
       }
 
       .top-txt {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
         width: 60px;
         height: 25px;
         line-height: 25px;
@@ -348,8 +360,11 @@ export default {
       }
 
       .cen-img {
+        padding: 10px;
+        // margin-top: 20px;
         img {
           width: 100%;
+          max-height: 180px;
         }
       }
 

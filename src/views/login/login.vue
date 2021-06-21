@@ -1,12 +1,12 @@
 <template>
   <div class="login">
-    <div class="maxbox">
+    <div class="max-box">
       <div class="title">
         <img src="@/assets/img/logo-txt.png" alt />
       </div>
     </div>
     <div class="login-box">
-      <div class="maxbox">
+      <div class="max-box">
         <div></div>
         <div class="panel" v-if="isLogin == true">
           <div class="tab">
@@ -255,7 +255,7 @@ export default {
     z-index: 3;
 
     // text-align: right;
-    .maxbox {
+    .max-box {
       display: grid;
       grid-template-columns: 800px 400px;
     }
