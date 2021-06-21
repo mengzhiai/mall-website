@@ -53,7 +53,7 @@
       <div class="containers flex-between">
         <div class="flex">
           <div class="header-logo">
-            <a href="/">
+            <a href="/home">
               <img src="@/assets/img/logo.png" alt />
             </a>
           </div>
@@ -86,10 +86,50 @@ import {
 export default {
   data() {
     return {
-      links: "",
+      links: '',
       topList: [{
-        name: "ddd"
-      }],
+          name: '小米商城',
+          link: ''
+        },
+        {
+          name: 'MIUI',
+          link: ''
+        }, {
+          name: 'loT',
+          link: ''
+        }, {
+          name: '云服务',
+          link: ''
+        }, {
+          name: '天星科技',
+          link: ''
+        }, {
+          name: '有品',
+          link: ''
+        }, {
+          name: '小爱开放平台',
+          link: ''
+        }, {
+          name: '企业团购',
+          link: ''
+        },
+        {
+          name: '资质证照',
+          link: ''
+        },
+        {
+          name: '协议规则',
+          link: ''
+        },
+        {
+          name: '下载app',
+          link: ''
+        },
+        {
+          name: '智能生活',
+          link: ''
+        }
+      ],
       navList: [],
       isLogin: true,
       loginPerson: "登录",
@@ -102,7 +142,7 @@ export default {
   methods: {
     getList() {
       headerList().then(res => {
-        if(res.code === 200) {
+        if (res.code === 200) {
           this.navList = res.data;
         }
       })
@@ -128,7 +168,6 @@ export default {
   background: #333;
 
   li {
-    line-height: 40px;
     display: inline-block;
     margin-right: 20px;
 

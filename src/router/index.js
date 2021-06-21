@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 登录
  * @LastEditors: jun
- * @LastEditTime: 2021-05-30 22:56:47
+ * @LastEditTime: 2021-06-21 22:40:50
  * @FilePath: \mi-mall\src\router\index.js
  */
 import Vue from 'vue'
@@ -25,6 +25,11 @@ const routes = [
       path: '/homePage',
       name: 'homePage',
       component: () => import('../views/layout/homePage')
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: () => import('../views/productDetail/detail')
     }
     ]
   }
