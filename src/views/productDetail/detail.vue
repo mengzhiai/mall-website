@@ -2,7 +2,7 @@
  * @Date: 2021-06-21 22:34:21
  * @Description: 商品详情
  * @LastEditors: jun
- * @LastEditTime: 2021-06-21 23:58:26
+ * @LastEditTime: 2021-06-23 23:41:46
  * @FilePath: \mi-mall\src\views\productDetail\detail.vue
 -->
 <template>
@@ -39,7 +39,7 @@
       </div>
       <div class="total-price">总计：1699元</div>
     </div>
-    <div class="add-cart">加入购物车</div>
+    <div class="add-cart" @click="addCart">加入购物车</div>
   </div>
 </div>
 </template>
@@ -95,6 +95,13 @@ export default {
     selectedColor(item, index) {
       this.activeCol = index;
     },
+
+    addCart() {
+      this.$message.success('加入购物车成功');
+      this.$router.push({
+        name: 'successTip'
+      })
+    }
   }
 }
 </script>

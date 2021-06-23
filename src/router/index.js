@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 登录
  * @LastEditors: jun
- * @LastEditTime: 2021-06-21 22:40:50
+ * @LastEditTime: 2021-06-24 00:02:48
  * @FilePath: \mi-mall\src\router\index.js
  */
 import Vue from 'vue'
@@ -30,9 +30,18 @@ const routes = [
       path: '/detail',
       name: 'detail',
       component: () => import('../views/productDetail/detail')
-    }
-    ]
-  }
+    },
+    {
+      path: '/successTip',
+      name: 'successTip',
+      component: () => import('../views/common/successTip')
+    }]
+  },
+  {
+    path: '/shoppingCart',
+    name: 'shoppingCart',
+    component: () => import('../views/cart/shoppingCart')
+  },
 ]
 
 const router = new VueRouter({

@@ -95,8 +95,45 @@ h6 {
   margin: 0 auto;
 }
 
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.mar-top {
+  margin-top: 10px;
+}
+
+.mar-bottom {
+  margin-bottom: 10px;
+}
+
+.pad-top {
+  padding-top: 10px;
+}
+
+.pad-bottom {
+  padding-top: 10px;
+}
+
 .point {
   cursor: pointer;
+}
+
+.table-list .el-table th,
+.table-list .el-table td {
+  text-align: center;
+}
+
+.theme-col {
+  color: #ff6700;
 }
 
 .xm-container {
