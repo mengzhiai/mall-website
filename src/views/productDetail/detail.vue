@@ -2,7 +2,7 @@
  * @Date: 2021-06-21 22:34:21
  * @Description: 商品详情
  * @LastEditors: jun
- * @LastEditTime: 2021-06-23 23:41:46
+ * @LastEditTime: 2021-07-11 20:24:53
  * @FilePath: \mi-mall\src\views\productDetail\detail.vue
 -->
 <template>
@@ -15,11 +15,11 @@
     </el-carousel>
   </div>
   <div class="content">
-    <div class="title">小米11u</div>
+    <div class="title">{{productForm.productName}}</div>
     <div class="description">
-      天玑1100年度旗舰芯 / VC液冷散热 / 120Hz旗舰变速金刚屏 / 67W 闪充 5000mAh 大电池 /JBL 立体声双扬声器 / UFS 3.1 / 6400万AI三摄 / 多功能NFC 3.0 / 旗舰级设计 艺术感工艺
+      {{productForm.label}}
     </div>
-    <div class="price">1999元</div>
+    <div class="price">{{productForm.price}}元</div>
     <div class="version common-select">
       <div class="con-tit">选择版本</div>
       <div class="wrap flex-between">
@@ -35,9 +35,9 @@
     <div class="selected-list">
       <div class="flex-between">
         <div class="type">Redmi Note 10 Pro 6GB+128GB 星纱</div>
-        <div>1699元</div>
+        <div>{{productForm.price}}元</div>
       </div>
-      <div class="total-price">总计：1699元</div>
+      <div class="total-price">总计：{{productForm.price}}元</div>
     </div>
     <div class="add-cart" @click="addCart">加入购物车</div>
   </div>
@@ -45,6 +45,10 @@
 </template>
 
 <script>
+import {
+  productDetail,
+  addCartShop
+} from '@/api/common'
 export default {
   data() {
     return {
@@ -84,10 +88,26 @@ export default {
         }
       ],
       activeVer: 0,
-      activeCol: 0
+      activeCol: 0,
+
+      productId: null,
+      productForm: {
+
+      }
     }
   },
+  mounted() {
+    this.productId = this.$route.query.id;
+    this.getDetail();
+  },
   methods: {
+    getDetail() {
+      productDetail(this.productId).then(res => {
+        if (res.code === 200) {
+          this.productForm = res.data;
+        }
+      })
+    },
     selectedVersion(item, index) {
       this.activeVer = index;
     },
@@ -97,9 +117,16 @@ export default {
     },
 
     addCart() {
-      this.$message.success('加入购物车成功');
-      this.$router.push({
-        name: 'successTip'
+      let params = {
+        productId: this.productForm.id
+      }
+      addCartShop(params).then(res => {
+        if (res.code === 200) {
+          this.$message.success('加入购物车成功');
+          this.$router.push({
+            name: 'successTip'
+          })
+        }
       })
     }
   }

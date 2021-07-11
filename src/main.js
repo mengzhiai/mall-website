@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-06-23 23:51:23
+ * @LastEditTime: 2021-07-11 21:27:30
  * @FilePath: \mi-mall\src\main.js
  */
 import Vue from 'vue'
@@ -17,6 +17,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/style/common.css';
 import '/src/style/element.scss'
 Vue.use(ElementUI);
+
+import { handleConfirm, handleMessage } from './utils/element';
+Vue.prototype.$handleConfirm = handleConfirm;
+Vue.prototype.$handleMessage = handleMessage;
 
 new Vue({
   router,

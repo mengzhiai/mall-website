@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 登录
  * @LastEditors: jun
- * @LastEditTime: 2021-06-24 00:02:48
+ * @LastEditTime: 2021-07-11 21:49:27
  * @FilePath: \mi-mall\src\router\index.js
  */
 import Vue from 'vue'
@@ -38,9 +38,21 @@ const routes = [
     }]
   },
   {
-    path: '/shoppingCart',
-    name: 'shoppingCart',
-    component: () => import('../views/cart/shoppingCart')
+    path: '/shoppingIndex',
+    name: 'shoppingIndex',
+    component: () => import('../views/cart/index'),
+    children: [
+      {
+        path: '/shoppingCart',
+        name: 'shoppingCart',
+        component: () => import('../views/cart/shoppingCart'),
+      },
+      {
+        path: '/orderList',
+        name: 'orderList',
+        component: () => import('../views/order/orderList')
+      },
+    ]
   },
 ]
 

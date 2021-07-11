@@ -2,14 +2,18 @@
  * @Date: 2021-05-30 21:37:55
  * @Description: 中间内容
  * @LastEditors: jun
- * @LastEditTime: 2021-06-21 22:41:09
+ * @LastEditTime: 2021-07-11 18:47:45
  * @FilePath: \mi-mall\src\views\layout\homePage.vue
 -->
 <template>
 <div class="wrap">
   <div class="max-box">
     <div class="home-page">
-      <div class="page">
+      <div class="page category">
+        <div class="item flex-between" v-for="(item, i) in menuList" :key="i">
+          <div>{{item.name}}</div>
+          <div><i class="el-icon-arrow-right"></i></div>
+        </div>
       </div>
       <div class="page">
         <!-- <ul>
@@ -17,7 +21,7 @@
           </ul>-->
         <el-carousel :interval="5000" arrow="always" height="420px">
           <el-carousel-item v-for="(item,i) in picList" :key="i">
-            <img :src="item.bannerUrl" class="click-cursor" @click="bannerDeail(item.productId)" />
+            <img :src="item.img" :title="item.title" class="click-cursor" @click="bannerDeail(item.id)" />
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -57,13 +61,13 @@
         </div>
       </div>
       <div class="product">
-        <div class="item" v-for="(ele, e) in item.list" :key="e" @click="detail(item)">
+        <div class="item" v-for="(ele, e) in item.list" :key="e" @click="detail(ele.id)">
           <div class="top-txt" v-if="ele.isNew==1">新品</div>
           <div class="cen-img">
             <img :src="ele.img" alt />
           </div>
           <div class="name">{{ele.productName}}</div>
-          <div class="detail">{{ele.productDesc}}</div>
+          <div class="detail">{{ele.description}}</div>
           <div class="price">{{ele.productPrice}}元</div>
         </div>
       </div>
@@ -80,16 +84,7 @@ import {
 export default {
   data() {
     return {
-      itemList: [{
-          name: "222"
-        },
-        {
-          name: "222"
-        },
-        {
-          name: "222"
-        }
-      ],
+      menuList: [],
       picList: [],
       sideImg: require("@/assets/img/xm9.jpg"),
       electric: [{
@@ -165,6 +160,7 @@ export default {
       classifyList().then(res => {
         if (res.code === 200) {
           this.productList = res.data;
+          this.menuList = res.data;
         }
       })
     },
@@ -195,16 +191,16 @@ export default {
       });
     },
     // banner详情页
-    bannerDeail() {},
-
+    bannerDeail(id) {
+      this.detail(id);
+    },
 
     //商品详情页
-    detail(row) {
-      // console.log(id);
+    detail(id) {
       this.$router.push({
         name: 'detail',
         query: {
-          id: row.id
+          id
         }
       });
     }
@@ -221,6 +217,22 @@ export default {
   .home-page {
     display: grid;
     grid-template-columns: 200px repeat(1, 1fr);
+
+    .category {
+      padding: 20px 0;
+      .item {
+        width: 100%;
+        height: 42px;
+        padding: 0 20px;
+        line-height: 42px;
+        color: #fff;
+        box-sizing: border-box;
+        &:hover {
+          background: #ff6700;
+          color: #fff;
+        }
+      }
+    }
 
     .page:nth-child(1) {
       // border: 1px solid #ccc;
@@ -361,6 +373,7 @@ export default {
 
       .cen-img {
         padding: 10px;
+
         // margin-top: 20px;
         img {
           width: 100%;
