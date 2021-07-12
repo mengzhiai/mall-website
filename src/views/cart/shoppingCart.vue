@@ -2,7 +2,7 @@
  * @Date: 2021-06-24 00:02:32
  * @Description: 购物车
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 21:50:51
+ * @LastEditTime: 2021-07-12 23:10:33
  * @FilePath: \mi-mall\src\views\cart\shoppingCart.vue
 -->
 <template>
@@ -64,6 +64,7 @@ export default {
     return {
       tableData: [],
       amountPrice: 0,
+      selectedList: []
     }
   },
   mounted() {
@@ -86,7 +87,6 @@ export default {
       console.log('rows', rows);
       rows.forEach(row => {
         if (row.checked == 1) {
-          // toggleRowSelection  这个方法是用来选中某一行（打勾）
           // row 是要选中的那一行
           // true 是为选中
           this.$refs.tableData.toggleRowSelection(row, true)
@@ -122,7 +122,21 @@ export default {
     },
 
     selectionChange(val) {
-      console.log('vak', val);
+      console.log('valll', val);
+      this.selectedList = val;
+      // this.getSelectedData();
+    },
+
+    getSelectedData() {
+      this.tableData.forEach(item => {
+        this.selectedList.forEach(ele => {
+        })
+      })
+    },
+
+
+    toggleRowSelection(row, selected) {
+      console.log('a', row, selected);
     },
 
     goOrder() {

@@ -41,8 +41,8 @@
             <router-link tag="a" to="/">我的订单</router-link>
           </div>
           <div class="topbar-cart">
-
-            <router-link tag="a" to="/">购物车(0)</router-link>
+            <!-- <div>购物车</div> -->
+            <router-link tag="a" to="/shoppingCart">购物车(0)</router-link>
           </div>
         </div>
       </div>

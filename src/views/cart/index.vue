@@ -2,7 +2,7 @@
  * @Date: 2021-07-11 21:48:20
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 21:51:13
+ * @LastEditTime: 2021-07-12 22:25:07
  * @FilePath: \mi-mall\src\views\cart\index.vue
 -->
 <template>
@@ -29,7 +29,7 @@
             <el-dropdown-item>我的订单</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button type="text" size="default">我的订单</el-button>
+        <el-button class="order" type="text" size="default">我的订单</el-button>
       </div>
     </div>
   </div>
@@ -86,5 +86,9 @@ export default {
     margin-left: 15px;
     color: #757575;
   }
+}
+
+.order {
+  margin-left: 10px;
 }
 </style>
