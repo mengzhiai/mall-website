@@ -2,44 +2,49 @@
  * @Date: 2021-06-21 22:34:21
  * @Description: 商品详情
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 20:24:53
+ * @LastEditTime: 2021-07-17 15:59:06
  * @FilePath: \mi-mall\src\views\productDetail\detail.vue
 -->
 <template>
-<div class="detail max-box flex-between">
-  <div class="banner-box">
-    <el-carousel :interval="5000" trigger="click" height="400px">
-      <el-carousel-item v-for="(item,i) in picList" :key="i">
-        <img :src="item.url" class="click-cursor" />
-      </el-carousel-item>
-    </el-carousel>
+<div class="max-box">
+  <div class="detail flex-between">
+    <div class="banner-box">
+      <el-carousel :interval="5000" trigger="click" height="400px">
+        <el-carousel-item v-for="(item,i) in picList" :key="i">
+          <img :src="item.url" class="click-cursor" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+    <div class="content">
+      <div class="title">{{productForm.productName}}</div>
+      <div class="description">
+        {{productForm.label}}
+      </div>
+      <div class="price">{{productForm.price}}元</div>
+      <div class="version common-select">
+        <div class="con-tit">选择版本</div>
+        <div class="wrap flex-between">
+          <div class="item" v-for="(item, i) in versionList" :key="i" :class="{active: activeVer == i }" @click="selectedVersion(item,i)">{{item.name}}</div>
+        </div>
+      </div>
+      <div class="version common-select">
+        <div class="con-tit">颜色</div>
+        <div class="wrap flex-between">
+          <div class="item" v-for="(item, i) in colorList" :key="i" :class="{active: activeCol == i }" @click="selectedColor(item, i)">{{item.color}}</div>
+        </div>
+      </div>
+      <div class="selected-list">
+        <div class="flex-between">
+          <div class="type">Redmi Note 10 Pro 6GB+128GB 星纱</div>
+          <div>{{productForm.price}}元</div>
+        </div>
+        <div class="total-price">总计：{{productForm.price}}元</div>
+      </div>
+      <div class="add-cart" @click="addCart">加入购物车</div>
+    </div>
   </div>
-  <div class="content">
-    <div class="title">{{productForm.productName}}</div>
-    <div class="description">
-      {{productForm.label}}
-    </div>
-    <div class="price">{{productForm.price}}元</div>
-    <div class="version common-select">
-      <div class="con-tit">选择版本</div>
-      <div class="wrap flex-between">
-        <div class="item" v-for="(item, i) in versionList" :key="i" :class="{active: activeVer == i }" @click="selectedVersion(item,i)">{{item.name}}</div>
-      </div>
-    </div>
-    <div class="version common-select">
-      <div class="con-tit">颜色</div>
-      <div class="wrap flex-between">
-        <div class="item" v-for="(item, i) in colorList" :key="i" :class="{active: activeCol == i }" @click="selectedColor(item, i)">{{item.color}}</div>
-      </div>
-    </div>
-    <div class="selected-list">
-      <div class="flex-between">
-        <div class="type">Redmi Note 10 Pro 6GB+128GB 星纱</div>
-        <div>{{productForm.price}}元</div>
-      </div>
-      <div class="total-price">总计：{{productForm.price}}元</div>
-    </div>
-    <div class="add-cart" @click="addCart">加入购物车</div>
+  <div class="detail-content">
+    <div v-html="productForm.detailContent"></div>
   </div>
 </div>
 </template>
@@ -52,12 +57,7 @@ import {
 export default {
   data() {
     return {
-      picList: [{
-          url: 'http://img.jun666.cn/mall1623658458398'
-        },
-        {
-          url: 'http://img.jun666.cn/mall1623658458398'
-        }
+      picList: [
       ],
       versionList: [{
           id: 1,
@@ -246,5 +246,11 @@ export default {
     border-color: #f25807;
     color: #fff;
   }
+}
+
+
+.detail-content {
+  margin-top: 100px;
+  border-top: 1px solid #ccc;
 }
 </style>

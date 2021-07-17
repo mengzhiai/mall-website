@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 21:37:55
  * @Description: 中间内容
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 18:47:45
+ * @LastEditTime: 2021-07-17 17:48:53
  * @FilePath: \mi-mall\src\views\layout\homePage.vue
 -->
 <template>
@@ -10,32 +10,32 @@
   <div class="max-box">
     <div class="home-page">
       <div class="page category">
-        <div class="item flex-between" v-for="(item, i) in menuList" :key="i">
-          <div>{{item.name}}</div>
-          <div><i class="el-icon-arrow-right"></i></div>
+        <div @mouseleave="onMouseOut">
+          <div class="item flex-between" v-for="(item, i) in menuList" :key="i" @click="classifyFun(item.id)" @mouseenter="onMouseOver(item.id)">
+            <div>{{item.name}}</div>
+            <div><i class="el-icon-arrow-right"></i></div>
+          </div>
         </div>
       </div>
       <div class="page">
-        <!-- <ul>
-        <li><img src="@/assets/img/pic1.jpg" alt=""></li>
-          </ul>-->
         <el-carousel :interval="5000" arrow="always" height="420px">
           <el-carousel-item v-for="(item,i) in picList" :key="i">
             <img :src="item.img" :title="item.title" class="click-cursor" @click="bannerDeail(item.id)" />
           </el-carousel-item>
         </el-carousel>
       </div>
+      <div class="category-product flex flex-wrap" v-show="isCategory">
+        <div class="item flex" v-for="(item, i) in classifyDataList" :key="i">
+          <div class="ico-img">
+            <img :src="item.img" alt="">
+          </div>
+          <div>{{item.productName}}</div>
+        </div>
+      </div>
     </div>
-    <div class="sub">
-      <div class="list box">
-        <ul>
-          <li>选购手机</li>
-          <li>企业团购</li>
-          <li>F码通道</li>
-          <li>米粉卡</li>
-          <li>以旧换新</li>
-          <li>话费充值</li>
-        </ul>
+    <div class="sub flex-between">
+      <div class="list">
+        <img src="@/assets/img/sub1.jpg" alt />
       </div>
       <div class="list">
         <img src="@/assets/img/sub1.jpg" alt />
@@ -55,7 +55,7 @@
     <div class="max-box" v-for="item in productList" :key="item.id">
       <div class="common-title">
         <div class="name">{{item.name}}</div>
-        <div class="more">
+        <div class="more" @click="moreFun(item.id)">
           查看全部
           <i class="el-icon-arrow-right"></i>
         </div>
@@ -87,59 +87,10 @@ export default {
       menuList: [],
       picList: [],
       sideImg: require("@/assets/img/xm9.jpg"),
-      electric: [{
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        },
-        {
-          img: require("@/assets/img/xyj.jpg"),
-          name: "米家互联网洗烘一体机10kg",
-          price: 2499
-        }
-      ],
-
-      productList: []
+      electric: [],
+      productList: [],
+      isCategory: false,
+      classifyDataList: []
     };
   },
   mounted() {
@@ -165,31 +116,21 @@ export default {
       })
     },
 
-    init() {
-      this.axios.get("/api/banner").then(res => {
-
-      });
-      //获取产品列表
-      this.axios.get("/api/productList").then(res => {
-        // this.productArr = res.data.data;
-        let dataList = res.data.data;
-        let [phoneList, applianceList] = [
-          [],
-          []
-        ];
-        dataList.forEach(item => {
-          if (item.type === "phone") {
-            phoneList.push(item);
-          }
-          if (item.type === "appliances") {
-            applianceList.push(item);
-          }
-        });
-        this.productArr = phoneList;
-        console.log(applianceList);
-        this.electric = applianceList;
-      });
+    onMouseOver(id) {
+      this.isCategory = true;
+      let classifyData = [];
+      this.menuList.forEach(item => {
+        if (item.id == id && item.list.length) {
+          classifyData = item.list;
+        }
+      })
+      this.classifyDataList = classifyData;
     },
+
+    onMouseOut() {
+      this.isCategory = false;
+    },
+
     // banner详情页
     bannerDeail(id) {
       this.detail(id);
@@ -203,6 +144,20 @@ export default {
           id
         }
       });
+    },
+
+    // 查看更多
+    moreFun(id) {
+      this.$router.push({
+        name: 'allProduct',
+        query: {
+          classifyId: id
+        }
+      })
+    },
+
+    classifyFun(id) {
+      this.moreFun(id);
     }
   }
 };
@@ -217,9 +172,11 @@ export default {
   .home-page {
     display: grid;
     grid-template-columns: 200px repeat(1, 1fr);
+    position: relative;
 
     .category {
       padding: 20px 0;
+
       .item {
         width: 100%;
         height: 42px;
@@ -227,6 +184,8 @@ export default {
         line-height: 42px;
         color: #fff;
         box-sizing: border-box;
+        cursor: pointer;
+
         &:hover {
           background: #ff6700;
           color: #fff;
@@ -281,27 +240,14 @@ export default {
   }
 
   .sub {
-    display: grid;
+    /* display: grid;
     grid-template-columns: 200px repeat(3, 1fr);
-    grid-gap: 20px;
+    grid-gap: 20px; */
     margin-top: 20px;
 
-    .box {
-      border: 1px solid #ccc;
-
-      ul {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        align-items: center;
-
-        li {
-          height: 85px;
-          line-height: 85px;
-        }
-      }
-    }
-
     .list {
+      width: calc(100% / 4 - 20px);
+
       img {
         width: 100%;
         height: 170px;
@@ -395,5 +341,29 @@ export default {
 
 .click-cursor {
   cursor: pointer;
+}
+
+.category-product {
+  width: calc(100% - 200px);
+  position: absolute;
+  left: 200px;
+  top: 0;
+  height: 400px;
+  border: 1px solid #f00;
+  background-color: #fff;
+  z-index: 100;
+
+  .item {
+    width: calc(100% / 4);
+    line-height: 80px;
+
+    .ico-img {
+      img {
+        width: 50px;
+        height: 50px;
+        margin: 15px 5px 15px 20px;
+      }
+    }
+  }
 }
 </style>

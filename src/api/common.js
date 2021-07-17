@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 18:34:29
  * @Description: 公用api
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 01:21:33
+ * @LastEditTime: 2021-07-17 16:45:47
  * @FilePath: \mi-mall\src\api\common.js
  */
 import baseUrl from './baseUrl'
@@ -28,6 +28,11 @@ export function bannerList() {
 // 商品分类列表
 export function classifyList() {
   return get(baseUrl.api + '/web/common/classifyList')
+}
+
+// 获取分类下的商品
+export function classifyProduct(id) {
+  return get(baseUrl.api + '/web/common/classifyProduct', {category: id})
 }
 
 
