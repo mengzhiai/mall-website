@@ -2,16 +2,16 @@
  * @Date: 2021-06-21 22:34:21
  * @Description: 商品详情
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 15:59:06
- * @FilePath: \mi-mall\src\views\productDetail\detail.vue
+ * @LastEditTime: 2021-07-21 00:16:13
+ * @FilePath: \mi-mall\src\views\product\detail.vue
 -->
 <template>
 <div class="max-box">
   <div class="detail flex-between">
     <div class="banner-box">
-      <el-carousel :interval="5000" trigger="click" height="400px">
+      <el-carousel :interval="3000" autoplay trigger="click" height="400px">
         <el-carousel-item v-for="(item,i) in picList" :key="i">
-          <img :src="item.url" class="click-cursor" />
+          <img :src="item.img" class="click-cursor" />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -105,6 +105,7 @@ export default {
       productDetail(this.productId).then(res => {
         if (res.code === 200) {
           this.productForm = res.data;
+          this.picList = res.data.imgList;
         }
       })
     },
