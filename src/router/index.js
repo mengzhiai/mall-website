@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 17:47:42
  * @Description: 登录
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 16:06:29
+ * @LastEditTime: 2021-07-27 00:20:50
  * @FilePath: \mi-mall\src\router\index.js
  */
 import Vue from 'vue'
@@ -62,7 +62,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
