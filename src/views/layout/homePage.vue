@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 21:37:55
  * @Description: 中间内容
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 17:48:53
+ * @LastEditTime: 2021-07-27 23:31:45
  * @FilePath: \mi-mall\src\views\layout\homePage.vue
 -->
 <template>
@@ -68,7 +68,7 @@
           </div>
           <div class="name">{{ele.productName}}</div>
           <div class="detail">{{ele.description}}</div>
-          <div class="price">{{ele.productPrice}}元</div>
+          <div class="price">{{ele.price}}元</div>
         </div>
       </div>
     </div>

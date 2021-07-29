@@ -2,7 +2,7 @@
  * @Date: 2021-03-21 18:34:29
  * @Description: 公用api
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 16:45:47
+ * @LastEditTime: 2021-07-29 14:13:42
  * @FilePath: \mi-mall\src\api\common.js
  */
 import baseUrl from './baseUrl'
@@ -51,14 +51,20 @@ export function cartList(data) {
   return get(baseUrl.api + '/web/common/cartList', data)
 }
 
+// 修改购物车状态
+export function updateChecked(data) {
+  return put(baseUrl.api + '/web/common/updateChecked', data)
+}
+
+
 // 更新购物车数量
 export function updateCartNumer(data) {
   return post(baseUrl.api + '/web/common/updateCartNumer', data)
 }
 
 // 删除购物车
-export function cartListDelete(id) {
-  return deleteFn(baseUrl.api + `/web/common/cartList/${id}`)
+export function cartListDelete(data) {
+  return deleteFn(baseUrl.api + `/web/common/cartList`, data)
 }
 
 /* --地址管理-- */
@@ -87,3 +93,21 @@ export function updateAddress(data) {
 export function deleteAddress(id) {
   return deleteFn(baseUrl.api + `/web/common/deleteAddress/${id}`)
 }
+
+// 默认地址
+export function defaultAddress(id) {
+  return put(baseUrl.api + `/web/common/defaultAddress/${id}`)
+}
+
+
+// 提交订单
+export function submitOrder(data) {
+  return post(baseUrl.api + `/web/common/submitOrder`, data)
+}
+
+
+// 订单列表
+export function orderDataList(data) {
+  return get(baseUrl.api + `/web/common/orderList`, data)
+}
+

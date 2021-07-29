@@ -52,10 +52,8 @@
     <div class="site-header">
       <div class="containers flex-between">
         <div class="flex">
-          <div class="header-logo">
-            <a href="/home">
-              <img src="@/assets/img/logo.png" alt />
-            </a>
+          <div class="header-logo" @click="goHome">
+            <img src="@/assets/img/logo.png" alt />
           </div>
           <div class="header-nav">
             <ul class="flex">
@@ -149,10 +147,16 @@ export default {
     },
     handleCommand(val) {
       if (val == "e") {
-        this.$router.push('/login');
+        this.$router.push('/');
         this.isLogin = false;
         localStorage.removeItem("loginStatus")
       }
+    },
+
+    goHome() {
+      this.$router.push({
+        name: 'home'
+      })
     }
   }
 };
@@ -210,9 +214,12 @@ export default {
 
   .header-logo {
     .logo {
+        cursor: pointer;
+      
       img {
         width: 50px;
         height: 50px;
+        cursor: pointer;
       }
     }
   }

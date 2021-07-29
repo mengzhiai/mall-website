@@ -2,7 +2,7 @@
  * @Date: 2021-06-24 00:02:32
  * @Description: 购物车
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 23:10:33
+ * @LastEditTime: 2021-07-29 13:23:26
  * @FilePath: \mi-mall\src\views\cart\shoppingCart.vue
 -->
 <template>
@@ -12,6 +12,9 @@
       <div class="table-list">
         <el-table ref="tableData" :data="tableData" border stripe size="default" @selection-change="selectionChange">
           <el-table-column type="selection" width="80">
+            <template slot-scope="scope">
+              <el-checkbox v-model="scope.row.checked" :label="true" @change="changeSelect(scope.row)"><br></el-checkbox>
+            </template>
           </el-table-column>
           <el-table-column prop="productName" label="商品名称" width="350">
           </el-table-column>
@@ -41,11 +44,11 @@
       <div class="cart-bar flex-between">
         <div class="section-left flex">
           <div class="continue">继续购物</div>
-          <div class="total">共<span>53</span>件商品，已选择<span>53</span>件</div>
+          <div class="total">共<span>{{cartObj.number}}</span>件商品，已选择<span>{{cartObj.checkedLenth}}</span>件</div>
         </div>
         <div class="total-price flex">
-          <div class="amount theme-col"><span class="money">合计: {{amountPrice}}</span><span class="unit">元</span></div>
-          <el-button type="primary" size="default" @click="goOrder">去结算</el-button>
+          <div class="amount theme-col"><span class="money">合计: {{cartObj.amountPrice}}</span><span class="unit">元</span></div>
+          <el-button type="primary" size="default" :disabled="cartObj.checkedLenth === 0" @click="goOrder">去结算</el-button>
         </div>
       </div>
     </div>
@@ -57,42 +60,60 @@
 import {
   cartList,
   updateCartNumer,
-  cartListDelete
+  cartListDelete,
+  updateChecked
 } from '@/api/common'
 export default {
   data() {
     return {
       tableData: [],
       amountPrice: 0,
-      selectedList: []
+      selectedList: [],
+      cartObj: {
+        amountPrice: 0,
+        number: 0,
+        checkedLenth: 0
+      }
     }
   },
   mounted() {
     this.getList();
   },
-  updated() {
-    this.toggleSelection(this.tableData);
-  },
   methods: {
     getList() {
+      this.cartObj = {
+        amountPrice: 0,
+        number: 0,
+        checkedLenth: 0
+      }
       cartList().then(res => {
         if (res.code === 200) {
-          this.tableData = res.data.list;
-          this.amountPrice = res.data.amountPrice;
+          let dataList = res.data.list;
+          dataList.forEach(item => {
+            if(item.checked == 1) {
+              item.checked = true;
+              this.cartObj.checkedLenth += 1;
+            } else if(item.checked == 2){
+              item.checked = false;
+            }
+            this.cartObj.number += item.num;
+          })
+          this.tableData = dataList;
+          this.cartObj.amountPrice = res.data.amountPrice;
         }
       })
     },
 
-    toggleSelection(rows) {
-      console.log('rows', rows);
-      rows.forEach(row => {
-        if (row.checked == 1) {
-          // row 是要选中的那一行
-          // true 是为选中
-          this.$refs.tableData.toggleRowSelection(row, true)
-        }
-      })
-    },
+    // toggleSelection(rows) {
+    //   console.log('rows', rows);
+    //   rows.forEach(row => {
+    //     if (row.checked == 1) {
+    //       // row 是要选中的那一行
+    //       // true 是为选中
+    //       this.$refs.tableData.toggleRowSelection(row, true)
+    //     }
+    //   })
+    // },
 
     // 修改数量
     changeNumer(row) {
@@ -126,6 +147,31 @@ export default {
       this.selectedList = val;
       // this.getSelectedData();
     },
+
+
+    changeSelect(row) {
+      console.log('row', row);
+      this.getChecked(row);
+    },
+
+    getChecked(row) {
+      let params = {
+        id: row.id
+      }
+      if(row.checked) {
+        params.checked = 1;
+      } else {
+        params.checked = 2;
+      }
+      updateChecked(params).then(res => {
+        if(res.code === 200) {
+          this.getList();
+          this.$message.success(res.msg);
+        }
+      })
+    },
+
+
 
     getSelectedData() {
       this.tableData.forEach(item => {

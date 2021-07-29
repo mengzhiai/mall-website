@@ -2,7 +2,7 @@
  * @Date: 2021-02-10 22:56:09
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-27 00:39:07
+ * @LastEditTime: 2021-07-27 22:01:18
  * @FilePath: \mi-mall\vue.config.js
  */
 const path = require('path');//引入path模块
@@ -43,14 +43,14 @@ module.exports = {
       //   errors: true
       // },
       open: false,
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 9090,
       https: false,
       hotOnly: false,
       proxy: {
           '/api': {
-              // target: "http://localhost:5000",
-              target: "http://mall.jun666.cn",
+              target: "http://localhost:5000",
+              // target: "http://mall.jun666.cn",
               changeOrigin: true,
               ws: true, // proxy websockets
               pathRewrite: { //重写路径

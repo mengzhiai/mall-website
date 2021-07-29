@@ -2,7 +2,7 @@
  * @Date: 2021-07-11 21:42:20
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 01:43:00
+ * @LastEditTime: 2021-07-30 00:37:34
  * @FilePath: \mi-mall\src\views\order\orderList.vue
 -->
 <template>
@@ -11,7 +11,7 @@
     <div class="address-list">
       <div class="order-title">订单列表</div>
       <div class="flex">
-        <div class="item" v-for="(item, i) in addressTableList" :key="i">
+        <div class="item" :class="{'default': item.isDefault == 1}" v-for="(item, i) in addressTableList" :key="i" @click="setDefault(item.id)">
           <div class="name">{{item.name}}</div>
           <div class="tel">{{item.tel}}</div>
           <div class="address">{{item.detailAddress}}</div>
@@ -30,20 +30,31 @@
       <div class="order-title">订单列表</div>
       <div class="item flex-between" v-for="(item, i) in orderList" :key="i">
         <div class="flex">
-          <div><img :src="item.img" alt=""></div>
-          <div>{{item.name}}</div>
+          <div><img class="img" :src="item.img" alt=""></div>
+          <div>{{item.productName}}</div>
         </div>
-        <div class="price">{{item.price}}元<span> X{{item.number}}</span></div>
+        <div class="price">{{item.price}}元<span> X{{item.num}}</span></div>
         <div></div>
         <div class="total-price">{{item.totalPrice}}元</div>
       </div>
     </div>
+    <div class="amout-price flex-right">
+      <div class="txt-box">
+        <div class="flex-between">
+          <div class="label">商品件数:</div>
+          <div class="value">{{totalObj.totalNumer}}件</div>
+        </div>
+        <div class="flex-between">
+          <div class="label">应付金额:</div>
+          <div class="value amount">{{totalObj.amountPrice}}<span>元</span></div>
+        </div>
+      </div>
+    </div>
     <div class="bottom-box flex-right">
       <el-button size="default" @click="goCart">返回购物车</el-button>
-      <el-button type="primary" size="default">立即下单</el-button>
+      <el-button type="primary" size="default" @click="submitData">立即下单</el-button>
     </div>
   </div>
-
   <el-dialog :title="addressTitle" :visible.sync="addressDialog" width="600px" :close-on-click-modal="false">
     <addressData ref="addressData" v-if="addressDialog"></addressData>
     <div class="flex-center">
@@ -58,11 +69,15 @@
 <script>
 import addressData from './address.vue'
 import {
+  cartList,
   addressList,
   addAddress,
   addressDetail,
   updateAddress,
-  deleteAddress
+  deleteAddress,
+  defaultAddress,
+  submitOrder,
+  orderDataList
 } from '@/api/common'
 export default {
   components: {
@@ -71,26 +86,37 @@ export default {
   data() {
     return {
       addressTableList: [],
-      orderList: [{
-        name: 'xiaomi 11',
-        price: '12312',
-        number: '21312',
-        totalPrice: 'w4234323'
-      }, {
-        name: 'xiaomi 11',
-        price: '12312',
-        number: '21312',
-        totalPrice: 'w4234323'
-      }],
+      orderList: [],
 
       addressDialog: false,
-      addressTitle: ''
+      addressTitle: '',
+
+      totalObj: {
+        totalNumer: 0,
+        amountPrice: 0
+      }
     }
   },
   mounted() {
+    this.getList();
     this.getAddress();
   },
   methods: {
+    getList() {
+      let params = {
+        type: 1
+      }
+      cartList(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data;
+          data.list.forEach(item => {
+            this.totalObj.totalNumer += item.num;
+          })
+          this.orderList = res.data.list;
+          this.totalObj.amountPrice = data.amountPrice;
+        }
+      })
+    },
     getAddress() {
       addressList().then(res => {
         if (res.code === 200) {
@@ -148,12 +174,42 @@ export default {
           }
         })
       }).catch(() => {})
+    },
 
+    // 设置默认地址
+    setDefault(id) {
+      defaultAddress(id).then(res => {
+        if (res.code === 200) {
+          this.getAddress();
+          this.$message.success('修改默认地址成功');
+        }
+      })
     },
 
     goCart() {
       this.$router.go(-1);
-    }
+    },
+
+
+    // 提交订单
+    submitData() {
+      let defaultId = null;
+      this.addressTableList.forEach(item => {
+        if(item.isDefault == 1) {
+          defaultId = item.id;
+        }
+      })
+
+      this.orderList.forEach(item => {
+        item.addressId = defaultId;
+      })
+
+      submitOrder(this.orderList).then(res => {
+        if(res.code === 200) {
+          
+        }
+      })
+    },
   }
 }
 </script>
@@ -243,6 +299,10 @@ export default {
     }
   }
 
+  .default {
+    border: 1px solid #ff6700;
+  }
+
   .add {
     display: flex;
     align-items: center;
@@ -267,10 +327,17 @@ export default {
 }
 
 .order-box {
+  position: relative;
+
   .item {
     height: 60px;
     line-height: 60px;
     font-size: 18px;
+
+    .img {
+      width: 60px;
+      height: 60px;
+    }
 
     .price {
       span {
@@ -283,6 +350,28 @@ export default {
       color: #ff6701;
     }
   }
+}
+
+.amout-price {
+  margin-top: 30px;
+
+  .txt-box {
+    width: 200px;
+    line-height: 30px;
+
+    .value {
+      color: #ff6700;
+    }
+
+    .amount {
+      font-size: 24px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+  }
+
 }
 
 .bottom-box {
